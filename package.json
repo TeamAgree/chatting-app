@@ -4,8 +4,8 @@
   "description": "1:1 chatting application",
   "main": "./src/index.js",
   "scripts": {
-    "build": "npx webpack build --env production",
-    "dev": "cross-env TS_NODE_PROJECT=\"tsconfig-for-webpack-config.json\" webpack serve --env development"
+    "dev": "cross-env TS_NODE_PROJECT=\"tsconfig-for-webpack-config.json\" webpack serve --env development",
+    "build": "cross-env TS_NODE_PROJECT=\"tsconfig-for-webpack-config.json\" NODE_ENV=production webpack"
   },
   "repository": {
     "type": "git",
@@ -44,6 +44,7 @@
   },
   "dependencies": {
     "cross-env": "^7.0.3",
+    "fork-ts-checker-webpack-plugin": "^8.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   }

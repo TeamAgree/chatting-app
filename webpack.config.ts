@@ -1,6 +1,7 @@
 import path from "path";
 import webpack, { Configuration as WebpackConfiguration } from "webpack";
 import { Configuration as WebpackDevServerConfiguration } from "webpack-dev-server";
+import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 
 interface Configuration extends WebpackConfiguration {
     devServer?: WebpackDevServerConfiguration;
@@ -36,24 +37,29 @@ const config: Configuration = {
                         [
                             '@babel/preset-env',
                             {
-                            targets: { browsers: ['IE 10'] },
-                            debug: isDevelopment,
+                                targets: { browsers: ['IE 10'] },
+                                debug: isDevelopment,
                             },
                         ],
-                        '@babel/preset-react',
+                        [
+                            '@babel/preset-react',
+                            {
+                                'runtime': 'automatic'
+                            }
+                        ],
                         '@babel/preset-typescript',
                     ],
                     env: {
                         development: {
                             plugins: [
                                 // ['@emotion', { sourceMap: true }],
-                                require.resolve('react-refresh/babel')
+                                // require.resolve('react-refresh/babel')
                             ],
                         },
                         production: {
                             // plugins: ['@emotion'],
                         },
-                    },
+                    }
                 },
                 exclude: path.join(__dirname, 'node_modules'),
             },
@@ -79,9 +85,15 @@ const config: Configuration = {
             },
         ],
     },
+    plugins: [
+        new ForkTsCheckerWebpackPlugin ({
+            async: false,
+        }),
+        new webpack.EnvironmentPlugin({ NODE_ENV: isDevelopment ? 'development' : 'production' }),
+    ],
     output: {
         path: path.join(__dirname, 'dist'),
-        filename: 'main.[hash].js',
+        filename: '[name].js',
         publicPath: '/dist/',
         clean: true,
     },
