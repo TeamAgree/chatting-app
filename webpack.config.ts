@@ -12,12 +12,19 @@ const config: Configuration = {
     name: 'Chatting-app',
     mode: isDevelopment ? 'development' : 'production',
     devtool: !isDevelopment ? 'hidden-source-map' : 'eval',
-    entry: './src/index.js',
-    output: {
-        path: path.resolve(__dirname, 'dist'),
-        filename: 'main.[hash].js',
-        publicPath: '/dist/',
-        clean: true,
+    resolve: {
+        extensions: ['.js', '.ts', '.jsx', '.tsx'],
+        alias: {
+            // '@hooks': path.resolve(__dirname, 'hooks'),
+            // '@components': path.resolve(__dirname, 'components'),
+            // '@layouts': path.resolve(__dirname, 'layouts'),
+            // '@pages': path.resolve(__dirname, 'pages'),
+            // '@utils': path.resolve(__dirname, 'utils'),
+            // '@typings': path.resolve(__dirname, 'typings'),
+        },
+    },
+    entry: {
+        app: './client',
     },
     module: {
         rules: [
@@ -72,12 +79,18 @@ const config: Configuration = {
             },
         ],
     },
+    output: {
+        path: path.join(__dirname, 'dist'),
+        filename: 'main.[hash].js',
+        publicPath: '/dist/',
+        clean: true,
+    },
     devServer: {
-        // static: { directory: path.join(__dirname, 'src') },
-        static: { directory: path.resolve(__dirname) },
         historyApiFallback: true, // react router
         port: 8082, // 기본 3000
         devMiddleware: { publicPath: '/dist/' },
+        // static: { directory: path.join(__dirname, 'src') },
+        static: { directory: path.resolve(__dirname) },
         compress: true, // 파일 압축 해제
         proxy: {
             '/api/': {
@@ -86,19 +99,7 @@ const config: Configuration = {
             },
         },
     },
-    resolve: {
-        extensions: ['.js', '.ts', '.jsx', '.tsx'],
-        alias: {
-            // '@hooks': path.resolve(__dirname, 'hooks'),
-            // '@components': path.resolve(__dirname, 'components'),
-            // '@layouts': path.resolve(__dirname, 'layouts'),
-            // '@pages': path.resolve(__dirname, 'pages'),
-            // '@utils': path.resolve(__dirname, 'utils'),
-            // '@typings': path.resolve(__dirname, 'typings'),
-        },
-    },
-
-}
+};
 
 // if (isDevelopment && config.plugins) {
 //     config.plugins.push(new webpack.HotModuleReplacementPlugin());

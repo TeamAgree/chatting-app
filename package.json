@@ -2,10 +2,9 @@
   "name": "agree-chatting-app",
   "version": "1.0.0",
   "description": "1:1 chatting application",
-  "main": "index.js",
+  "main": "./src/index.js",
   "scripts": {
     "build": "npx webpack build --env production",
-    "start": "npx webpack serve",
     "dev": "cross-env TS_NODE_PROJECT=\"tsconfig-for-webpack-config.json\" webpack serve --env development"
   },
   "repository": {
