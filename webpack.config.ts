@@ -2,6 +2,9 @@ import path from "path";
 import webpack, { Configuration as WebpackConfiguration } from "webpack";
 import { Configuration as WebpackDevServerConfiguration } from "webpack-dev-server";
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
+import dotenv from "dotenv";
+
+
 
 interface Configuration extends WebpackConfiguration {
     devServer?: WebpackDevServerConfiguration;
@@ -19,9 +22,9 @@ const config: Configuration = {
             // '@hooks': path.resolve(__dirname, 'hooks'),
             // '@components': path.resolve(__dirname, 'components'),
             // '@layouts': path.resolve(__dirname, 'layouts'),
-            // '@pages': path.resolve(__dirname, 'pages'),
-            // '@utils': path.resolve(__dirname, 'utils'),
-            // '@typings': path.resolve(__dirname, 'typings'),
+            '@pages': path.resolve(__dirname, 'src/pages'),
+            '@utils': path.resolve(__dirname, 'src/utils'),
+            '@types': path.resolve(__dirname, 'src/types'),
         },
     },
     entry: {
@@ -90,6 +93,9 @@ const config: Configuration = {
             async: false,
         }),
         new webpack.EnvironmentPlugin({ NODE_ENV: isDevelopment ? 'development' : 'production' }),
+        new webpack.DefinePlugin({
+            'process.env': JSON.stringify(dotenv.config().parsed),
+        })
     ],
     output: {
         path: path.join(__dirname, 'dist'),
@@ -106,7 +112,7 @@ const config: Configuration = {
         compress: true, // 파일 압축 해제
         proxy: {
             '/api/': {
-                target: 'http://34.64.251.46:8088',
+                target: process.env.REACT_APP_SERVER_URL,
                 changeOrigin: true,
             },
         },
