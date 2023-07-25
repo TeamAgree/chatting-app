@@ -16,11 +16,11 @@
         // "@layouts/*": ["layouts/*"],
         // "@pages/*": ["pages/*"],
         // "@utils/*": ["utils/*"],
-        // "@typings/*": ["typings/*"]
+        "@types/*": ["types/*"]
       }
     },
     "include": [
-        "src", "scr/custom.d.ts", 
+        "src", "src/*/custom.d.ts", 
         "client.tsx"
     ],
     "ts-node": {
@@ -31,5 +31,5 @@
         "esModuleInterop": true
       }
     }
-  }
+}
   
