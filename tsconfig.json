@@ -9,13 +9,13 @@
       "target": "es5",
       "strict": true,
       "resolveJsonModule": true,
-      "baseUrl": ".",
+      "baseUrl": "./src/",
       "paths": {
         // "@hooks/*": ["hooks/*"],
         // "@components/*": ["components/*"],
         // "@layouts/*": ["layouts/*"],
-        // "@pages/*": ["pages/*"],
-        // "@utils/*": ["utils/*"],
+        "@pages/*": ["pages/*"],
+        "@utils/*": ["utils/*"],
         "@types/*": ["types/*"]
       }
     },
