@@ -1,16 +1,26 @@
 import axios from "axios";
 
-export const getFetcher = ( url: string ) => (
-    axios
-        .get ( url, {
-            withCredentials: true
-        })
-        .then((response) => response.data)
+export const getFetcher = async ( url: string ) => (
+    await axios
+        .get (
+            url,
+            {
+                withCredentials: true
+            }
+        )
+        .then(
+            res => (
+                res
+            )
+        )
+        .catch(
+            err => console.error(err)
+        )
 
 )
 
-export const postFetcher = ( url: string, data: object ) => {
-    axios
+export const postFetcher = async ( url: string, data: object ) => {
+    await axios
         .post ( 
             url,
             data,
@@ -18,5 +28,10 @@ export const postFetcher = ( url: string, data: object ) => {
                 withCredentials: true
             }
         )
-        .then((response) => response.data)
+        .then(
+            res => res.data
+        )
+        .catch(
+            err => console.error(err)
+        )
 }
