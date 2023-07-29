@@ -20,7 +20,7 @@ const config: Configuration = {
         extensions: ['.js', '.ts', '.jsx', '.tsx'],
         alias: {
             // '@hooks': path.resolve(__dirname, 'hooks'),
-            // '@components': path.resolve(__dirname, 'components'),
+            '@components': path.resolve(__dirname, 'src/components'),
             // '@layouts': path.resolve(__dirname, 'layouts'),
             '@pages': path.resolve(__dirname, 'src/pages'),
             '@utils': path.resolve(__dirname, 'src/utils'),
