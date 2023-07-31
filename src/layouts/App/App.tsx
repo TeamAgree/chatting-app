@@ -11,10 +11,13 @@ const App = () => {
         <>
             <GlobalStyle />
             <Routes>
-                <Route path="/" element={<Navigate to="/login" replace={true}/>}></Route>
+                <Route path="/" element={
+                    user ? <Navigate to="/workspace" replace={true}/> :
+                    <Navigate to="/login" replace={true}/>}>
+                </Route>
                 <Route path="/login" element={<Login />} />
                 <Route path="/signup" element={<SignUp />} />
-                <Route path="/workspace" element={<Workspace />} />
+                <Route path="/workspace/*" element={<Workspace />} />
             </Routes>
         </>
     )
