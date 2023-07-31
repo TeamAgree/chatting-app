@@ -1,35 +1,36 @@
 {
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "lib": ["ES2020", "DOM"],
+    "jsx": "react-jsx",
+    "module": "ES2022",
+    "moduleResolution": "Node",
+    "target": "es5",
+    "strict": true,
+    "resolveJsonModule": true,
+    "baseUrl": "./src/",
+    "paths": {
+      "@hooks/*": ["hooks/*"],
+      "@components/*": ["components/*"],
+      "@layouts/*": ["layouts/*"],
+      "@pages/*": ["pages/*"],
+      "@utils/*": ["utils/*"],
+      "@types/*": ["types/*"],
+      "@recoil/*": ["recoil/*"],
+    }
+  },
+  "include": [
+      "src", "src/*/custom.d.ts", 
+      "client.tsx"
+  ],
+  "ts-node": {
     "compilerOptions": {
-      "esModuleInterop": true,
-      "sourceMap": true,
-      "lib": ["ES2020", "DOM"],
-      "jsx": "react-jsx",
-      "module": "ES2022",
+      "module": "commonjs",
       "moduleResolution": "Node",
       "target": "es5",
-      "strict": true,
-      "resolveJsonModule": true,
-      "baseUrl": "./src/",
-      "paths": {
-        "@hooks/*": ["hooks/*"],
-        "@components/*": ["components/*"],
-        "@layouts/*": ["layouts/*"],
-        "@pages/*": ["pages/*"],
-        "@utils/*": ["utils/*"],
-        "@types/*": ["types/*"]
-      }
-    },
-    "include": [
-        "src", "src/*/custom.d.ts", 
-        "client.tsx"
-    ],
-    "ts-node": {
-      "compilerOptions": {
-        "module": "commonjs",
-        "moduleResolution": "Node",
-        "target": "es5",
-        "esModuleInterop": true
-      }
+      "esModuleInterop": true
     }
+  }
 }
   

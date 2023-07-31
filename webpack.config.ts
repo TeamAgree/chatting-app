@@ -25,6 +25,7 @@ const config: Configuration = {
             '@pages': path.resolve(__dirname, 'src/pages'),
             '@utils': path.resolve(__dirname, 'src/utils'),
             '@types': path.resolve(__dirname, 'src/types'),
+            '@recoil': path.resolve(__dirname, 'src/recoil'),
         },
     },
     entry: {
