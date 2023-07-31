@@ -29,7 +29,10 @@ export const postFetcher = async ( url: string, data: object ) => {
             }
         )
         .then(
-            res => res.data
+            res => {
+                console.log(res);
+                
+            }
         )
         .catch(
             err => console.error(err)
