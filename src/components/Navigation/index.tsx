@@ -1,17 +1,16 @@
-import Login from "@pages/Login";
 import { Link } from "react-router-dom";
 
 const Navigation = () => {
     return (
         <ul>
             <li>
-                <Link to="/login">로그인</Link>
+                <Link to="/workspace/Chatting">채팅 페이지</Link>
             </li>
             <li>
-                <Link to="/signup">회원가입</Link>
+                <Link to="/workspace/ChatList">채팅 리스트</Link>
             </li>
             <li>
-                <Link to="/main">메인페이지</Link>
+                <Link to="/workspace/MemberList">멤버 리스트</Link>
             </li>
         </ul>
     )
