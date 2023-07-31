@@ -11,9 +11,9 @@
       "resolveJsonModule": true,
       "baseUrl": "./src/",
       "paths": {
-        // "@hooks/*": ["hooks/*"],
+        "@hooks/*": ["hooks/*"],
         "@components/*": ["components/*"],
-        // "@layouts/*": ["layouts/*"],
+        "@layouts/*": ["layouts/*"],
         "@pages/*": ["pages/*"],
         "@utils/*": ["utils/*"],
         "@types/*": ["types/*"]
