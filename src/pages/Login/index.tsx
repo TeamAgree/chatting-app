@@ -1,18 +1,9 @@
 import React, { useCallback, useState } from "react";
 import { postFetcher } from "@utils/fetcher";
 import useInput from "@hooks/useInput";
-import { Form } from "./styles";
+import { LoginWrap, Form } from "./styles";
 import axios from "axios";
 import { Link } from "react-router-dom";
-
-type LoginProps = {
-    onSubmit: (
-        form: {
-            id: string;
-            password: string;
-        }
-    ) => void;
-};
 
 const Login = () => {
 
@@ -32,14 +23,16 @@ const Login = () => {
     
 
     return (
-        <section id="container">
-            <Form onSubmit={onSubmit}>
-                <input type="text" name="id" placeholder="ID" value={id} onChange={onChnageId} />
-                <input type="password" name="password" placeholder="PASSWORD" value={password} onChange={onChangePW}/>
-                <button type="submit">로그인</button>
-            </Form>
-            <Link to="/signup">회원가입</Link>
-        </section>
+        <LoginWrap>
+            <div className="container">
+                <Form onSubmit={onSubmit}>
+                    <input type="text" name="id" placeholder="ID" value={id} onChange={onChnageId} />
+                    <input type="password" name="password" placeholder="PASSWORD" value={password} onChange={onChangePW}/>
+                    <button type="submit">로그인</button>
+                </Form>
+                <Link to="/signup">회원가입</Link>
+            </div>
+        </LoginWrap>
     )
 }
 

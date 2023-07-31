@@ -4,21 +4,8 @@ import useInput from "@hooks/useInput";
 import { Form } from "./styles";
 import axios from "axios";
 import { Link } from "react-router-dom";
+// import { SignUpProps } from "@types/db";
 
-type SignUpProps = {
-    onSubmit: (
-        form: {
-            id: string;
-            password: string;
-        }
-    ) => void;
-};
-type SignUp = {
-    id: string;
-    pw: string;
-    name: string;
-    birth: string | number;
-};
 
 const SignUp = () => {
 
@@ -30,7 +17,7 @@ const SignUp = () => {
     const onSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const data: SignUp = { id, pw: password, name, birth };
+        // const data: SignUpProps = { id, pw: password, name, birth };
         
         // axios.post('/api/v1/public/user/join', data)
         // postFetcher('/api/v1/public/user/login', data);
