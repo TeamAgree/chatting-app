@@ -19,9 +19,9 @@ const config: Configuration = {
     resolve: {
         extensions: ['.js', '.ts', '.jsx', '.tsx'],
         alias: {
-            // '@hooks': path.resolve(__dirname, 'hooks'),
+            '@hooks': path.resolve(__dirname, 'src/hooks'),
             '@components': path.resolve(__dirname, 'src/components'),
-            // '@layouts': path.resolve(__dirname, 'layouts'),
+            '@layouts': path.resolve(__dirname, 'src/layouts'),
             '@pages': path.resolve(__dirname, 'src/pages'),
             '@utils': path.resolve(__dirname, 'src/utils'),
             '@types': path.resolve(__dirname, 'src/types'),
@@ -112,7 +112,8 @@ const config: Configuration = {
         compress: true, // 파일 압축 해제
         proxy: {
             '/api/': {
-                target: process.env.REACT_APP_SERVER_URL,
+                // target: process.env.REACT_APP_SERVER_URL,
+                target: `http://34.64.251.46:8088`,
                 changeOrigin: true,
             },
         },
