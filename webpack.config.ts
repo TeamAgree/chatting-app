@@ -113,8 +113,7 @@ const config: Configuration = {
         compress: true, // 파일 압축 해제
         proxy: {
             '/api/': {
-                // target: process.env.REACT_APP_SERVER_URL,
-                target: `http://34.64.251.46:8088`,
+                target: process.env.REACT_APP_SERVER_URL,
                 changeOrigin: true,
             },
         },
