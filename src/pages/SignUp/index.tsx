@@ -1,10 +1,11 @@
 import React, { useCallback, useState } from "react";
 import { postFetcher } from "@utils/fetcher";
 import useInput from "@hooks/useInput";
-import { Form } from "./styles";
 import axios from "axios";
 import { Link } from "react-router-dom";
-// import { SignUpProps } from "@types/db";
+import { SignUpProps } from "@typings/db";
+import { SignUpWrap, Form } from "@pages/Login/styles";
+import { customAxios } from "@utils/customAxios";
 
 
 const SignUp = () => {
@@ -17,52 +18,33 @@ const SignUp = () => {
     const onSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        // const data: SignUpProps = { id, pw: password, name, birth };
-        
-        // axios.post('/api/v1/public/user/join', data)
-        // postFetcher('/api/v1/public/user/login', data);
-        // console.log(data);
-        const headers = {
-            "Content-Type": "application/x-www-form-urlencoded",
-            "Access-Control-Allow-Origin": "*",
+        const data: SignUpProps = { id, pw: password, name, birth };
+        const signUpData = async () => {
+            const resData = await customAxios('post', '/api/v1/public/user/join', data);
+
+            console.log(resData);
+            
         }
-        axios
-        .post ( 
-            `/api/v1/public/user/join`,
-            {
-                id: 'cksdlr7446',
-                pw: 3016,
-                name: '안찬익',
-                birth: 930316
-            },
-            {headers}
-        )
-        .then(
-            res => {
-                console.log(res);
-                
-            }
-        )
-        .catch(
-            err => console.error(err)
-        )
         
+        signUpData();
         
-    }, [id, password])
+    }, [id, password, name, birth])
 
     
 
     return (
-        <section id="container">
-            <Form onSubmit={onSubmit}>
-                <input type="text" name="id" placeholder="ID" value={id} onChange={onChnageId} />
-                <input type="password" name="password" placeholder="PASSWORD" value={password} onChange={onChangePW}/>
-                <input type="text" name="name" placeholder="NAME" value={name} onChange={onChangeName}/>
-                <input type="number" name="birth" placeholder="BIRTH" value={birth} onChange={onChangeBirth}/>
-                <button type="submit">회원가입</button>
-            </Form>
-            <Link to="/login">로그인하러 가기</Link>
-        </section>
+        <SignUpWrap>
+            <div className="container">
+                <Form onSubmit={onSubmit}>
+                    <input type="text" name="id" placeholder="ID" value={id} onChange={onChnageId} />
+                    <input type="password" name="password" placeholder="PASSWORD" value={password} onChange={onChangePW}/>
+                    <input type="text" name="name" placeholder="NAME" value={name} onChange={onChangeName}/>
+                    <input type="number" name="birth" placeholder="BIRTH" value={birth} onChange={onChangeBirth}/>
+                    <button type="submit">회원가입</button>
+                </Form>
+                <Link to="/login">로그인하러 가기</Link>
+            </div>
+        </SignUpWrap>
     )
 }
 

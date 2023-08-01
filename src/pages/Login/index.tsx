@@ -4,6 +4,8 @@ import useInput from "@hooks/useInput";
 import { LoginWrap, Form } from "./styles";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { LoginProps } from "@typings/db";
+import { customAxios } from "@utils/customAxios";
 
 const Login = () => {
 
@@ -13,10 +15,14 @@ const Login = () => {
     const onSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const data = { id, pw: password };
+        const data: LoginProps = {id, pw: password};
+        const loginData = async () => {
+            const resData = await customAxios('post', '/api/v1/public/user/login', data);
+            
+            console.log(resData);
+        }
         
-        axios.post('/api/v1/public/user/login', data);
-        
+        loginData();
         
     }, [id, password])
 
