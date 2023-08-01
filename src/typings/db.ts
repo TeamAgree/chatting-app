@@ -18,12 +18,8 @@ export interface ILogin {
 }
 
 export type LoginProps = {
-    onSubmit: (
-        form: {
-            id: string;
-            password: string;
-        }
-    ) => void;
+    id: string;
+    pw: string;
 };
 
 export type SignUpProps = {
