@@ -1,8 +1,20 @@
 import axios, { AxiosRequestConfig } from "axios"
 
-export const customAxios = () => {
+export const customAxios = async ( method: string, url: string, data: {} ) => {
     const axiosConfig: AxiosRequestConfig = {
-        baseURL: process.env.REACT_APP_SERVER_UR,
+        method: method,
+        url: url,
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        data: data
     };
-    return axios.create(axiosConfig);
+
+    try {
+        const res = await axios.request(axiosConfig);
+        return res;        
+    }
+    catch(e) {
+
+    }
 }
