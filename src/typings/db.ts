@@ -12,12 +12,11 @@ export interface IChatList {
     OwnerId: number;
 }
 
-export interface ILogin {
-    id: string;
-    password: string | number;
+export type IsLogin = {
+    token: string;
 }
 
-export type LoginProps = {
+export interface LoginProps {
     id: string;
     pw: string;
 };
