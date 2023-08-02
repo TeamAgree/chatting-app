@@ -2,11 +2,12 @@ import Navigation from "@components/Navigation";
 import ChatList from "@pages/ChatList";
 import Chatting from "@pages/Chatting";
 import MemberList from "@pages/MemberList";
-import { Route, Routes, useParams } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 const Workspace = () => {
-    const params = useParams<{workspace: string}>();
-    console.log(params);
+    
+    const isUserInfo = '';
+    // token을 가지고 user 정보를 가져와서 확인
     
     return (
         <>
