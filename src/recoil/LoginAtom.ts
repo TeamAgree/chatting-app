@@ -1,8 +1,9 @@
+import { LoginProps } from "@typings/db";
 import { atom, selector } from "recoil";
 
-export const LoginAtom = atom({
+export const LoginAtom = atom<string>({
     key: "LoginAtom",
-    default: []
+    default: ''
 })
 
 export const LoginSelector = selector({
