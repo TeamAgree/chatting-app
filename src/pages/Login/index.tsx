@@ -4,18 +4,19 @@ import { LoginWrap, Form } from "./styles";
 import { Link, Navigate } from "react-router-dom";
 import { LoginProps } from "@typings/db";
 import { customAxios } from "@utils/customAxios";
-import { useRecoilValue, useSetRecoilState } from "recoil";
-import { UserAtom } from "@recoil/UserAtom";
-import { IsLoginAtom } from "@recoil/IsLoginAtom";
+import { useSetRecoilState } from "recoil";
+import { UserTokenAtom } from "@recoil/UserTokenAtom";
 
 const Login = () => {
+
+    const getUserToken = localStorage.getItem('token');
 
     const [ id, onChnageId ] = useInput('');
     const [ password, onChangePW ] = useInput('');
     const [ isError, setIsError ] = useState(false);
     const [ errorText, setErrorText ] = useState('');
-    const setIsLogin = useSetRecoilState(IsLoginAtom);
-    const isLogin = useRecoilValue(IsLoginAtom);
+
+    const setUserToken = useSetRecoilState(UserTokenAtom);
 
     const onSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -24,21 +25,23 @@ const Login = () => {
 
         if (!id) {
             setIsError(true);
-            setErrorText('아이디 입력하세요.');
+            setErrorText('아이디를 입력하세요.');
             return;
         }
         if (!password) {
             setIsError(true);
-            setErrorText('비밀번호 입력하세요.');
+            setErrorText('비밀번호를 입력하세요.');
             return;
         }
 
         const data: LoginProps = {id, pw: password};
         const loginData = async () => {
-            const resData = await customAxios('post', '/api/v1/public/user/login', data);
-            if (resData?.status === 200) {
+            const resData = await customAxios('post', '/api/v1/public/user/login', data, null);
+            
+            if (resData?.data.code === "SUCCESS") {
                 localStorage.setItem("token",resData.data.result);
-                setIsLogin(() => resData.data.result);
+                setUserToken(() => resData.data.result);
+
                 return <Navigate to="/workspace" replace={true}/>
             }
         }
@@ -52,9 +55,7 @@ const Login = () => {
         setErrorText('');
     }, [ id, password ])
 
-    if(isLogin) {
-        console.log(isLogin);
-        
+    if(getUserToken) {
         return (
             <Navigate to="/workspace" replace={true} />
         )
