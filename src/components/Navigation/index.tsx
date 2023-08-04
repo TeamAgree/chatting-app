@@ -1,6 +1,8 @@
+import Logout from "@components/Logout";
 import { Link } from "react-router-dom";
 
 const Navigation = () => {
+
     return (
         <ul>
             <li>
@@ -11,6 +13,9 @@ const Navigation = () => {
             </li>
             <li>
                 <Link to="/workspace/MemberList">멤버 리스트</Link>
+            </li>
+            <li>
+                <Logout />
             </li>
         </ul>
     )
