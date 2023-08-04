@@ -2,12 +2,25 @@ import Navigation from "@components/Navigation";
 import ChatList from "@pages/ChatList";
 import Chatting from "@pages/Chatting";
 import MemberList from "@pages/MemberList";
-import { Route, Routes } from "react-router-dom";
+import { UserTokenAtom } from "@recoil/UserTokenAtom";
+import { useEffect } from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
 
 const Workspace = () => {
     
-    const isUserInfo = '';
-    // token을 가지고 user 정보를 가져와서 확인
+    const getUserToken = localStorage.getItem('token');
+    const setUserTokenRecoil = useSetRecoilState(UserTokenAtom);
+    
+    useEffect(() => {
+        // TODO => !: 어선셜 연산자
+        setUserTokenRecoil(() => getUserToken!);
+    }, [])
+
+
+    if (!getUserToken) {
+        return <Navigate to="/login" replace={true}/>
+    }
     
     return (
         <>

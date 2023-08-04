@@ -5,14 +5,14 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { GlobalStyle } from "./style";
 
 const App = () => {
-    const user = true;
+    const isUserLoginToken = localStorage.getItem('token');
 
     return (
         <>
             <GlobalStyle />
             <Routes>
                 <Route path="/" element={
-                    user ? <Navigate to="/workspace" replace={true}/> :
+                    isUserLoginToken ? <Navigate to="/workspace" replace={true}/> :
                     <Navigate to="/login" replace={true}/>}>
                 </Route>
                 <Route path="/login" element={<Login />} />
