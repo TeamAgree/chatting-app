@@ -1,11 +1,12 @@
 import { UserAtom } from "@recoil/UserAtom";
+import { UserTokenAtom } from "@recoil/UserTokenAtom";
 import { useCallback } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 
 const MemberList = () => {
 
     const user = useRecoilValue(UserAtom);
-    const setUser = useSetRecoilState(UserAtom);
+    const userTokenRecoil = useRecoilValue(UserTokenAtom);
 
     const memberData = {
         id: 'cksdlr7446',
@@ -13,18 +14,18 @@ const MemberList = () => {
         birth: 930316
     }
 
-    const onAddMember = useCallback(() => {
-        setUser((prev) => [
-            ...prev,
-            memberData
-        ])
+    // const onAddMember = useCallback(() => {
+    //     setUser((prev) => [
+    //         ...prev,
+    //         memberData
+    //     ])
         
-    }, [user])
+    // }, [user])
 
 
     return (
         <div>
-            <button onClick={onAddMember}>멤버추가</button>
+            <button>멤버추가</button>
             {user.length > 0 && user?.map(v => (
                 v.id
             ))}
