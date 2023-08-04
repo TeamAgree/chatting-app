@@ -1,8 +1,12 @@
 export type IUser = {
     id: string;
+    pw: string;
     name: string;
     birth: number;
-    // chatList: IChatList[]
+    status: string;
+    roles: string;
+    pushKey: null | string;
+    friends: null | [];
 }
 
 export interface IChatList {
@@ -12,7 +16,7 @@ export interface IChatList {
     OwnerId: number;
 }
 
-export type IsLogin = {
+export type UserToken = {
     token: string;
 }
 
