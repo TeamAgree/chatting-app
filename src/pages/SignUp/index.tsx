@@ -1,36 +1,84 @@
-import React, { useCallback, useState } from "react";
-import { postFetcher } from "@utils/fetcher";
+import React, { useCallback, useEffect, useState } from "react";
 import useInput from "@hooks/useInput";
-import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { SignUpProps } from "@typings/db";
 import { SignUpWrap, Form } from "@pages/Login/styles";
 import { customAxios } from "@utils/customAxios";
 
-
 const SignUp = () => {
+    const getUserToken = localStorage.getItem('token');
 
     const [ id, onChnageId ] = useInput('');
     const [ password, onChangePW ] = useInput('');
     const [ name, onChangeName ] = useInput('');
     const [ birth, onChangeBirth ] = useInput('');
 
+    const [ isError, setIsError ] = useState(false);
+    const [ errorText, setErrorText ] = useState('');
+    const [ isSuccess, setIsSuccess ] = useState(false);
+    const [ successText, setSuccessText ] = useState('');
+    const [ successTimer, setSuccessTimer ] = useState(10);
+
+
     const onSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setIsError(false);
+        setErrorText('');
+
+        if (!id) {
+            setIsError(true);
+            setErrorText('아이디를 입력하세요.');
+            return;
+        }
+        if (!password) {
+            setIsError(true);
+            setErrorText('비밀번호를 입력하세요.');
+            return;
+        }
+        if (!name) {
+            setIsError(true);
+            setErrorText('이름을 입력하세요.');
+            return;
+        }
+        if (!birth) {
+            setIsError(true);
+            setErrorText('생일을 입력하세요.');
+            return;
+        }
 
         const data: SignUpProps = { id, pw: password, name, birth };
         const signUpData = async () => {
-            const resData = await customAxios('post', '/api/v1/public/user/join', data);
+            const resData = await customAxios('post', '/api/v1/public/user/join', data, null);
+            if (resData?.data.code === "SUCCESS") {
+                setIsSuccess(true);
+                setSuccessText('초 후 로그인 페이지로 이동합니다.');
+                setInterval(() => {
+                    setSuccessTimer((prev) => prev - 1)
+                }, 1000);
 
-            console.log(resData);
+
+            }
             
         }
         
         signUpData();
         
-    }, [id, password, name, birth])
+    }, [id, password, name, birth]);
 
-    
+    useEffect(() => {
+        (async () => {
+
+            if (successTimer === 0) {
+                return <Navigate to="/login" replace={true} />
+            }
+        })
+    }, [successTimer])
+
+    if(getUserToken) {
+        return (
+            <Navigate to="/workspace" replace={true} />
+        )
+    }
 
     return (
         <SignUpWrap>
@@ -41,6 +89,8 @@ const SignUp = () => {
                     <input type="text" name="name" placeholder="NAME" value={name} onChange={onChangeName}/>
                     <input type="number" name="birth" placeholder="BIRTH" value={birth} onChange={onChangeBirth}/>
                     <button type="submit">회원가입</button>
+                    {isError && <p>{errorText}</p>}
+                    {isSuccess && <p>{successTimer} {successText}</p>}
                 </Form>
                 <Link to="/login">로그인하러 가기</Link>
             </div>
