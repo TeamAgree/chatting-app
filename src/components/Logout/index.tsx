@@ -1,29 +1,23 @@
-import { UserTokenAtom } from "@recoil/UserTokenAtom";
+import { AccessTokenAtom } from "@recoil/AccessTokenAtom";
 import { customAxios } from "@utils/customAxios";
-import { useCallback } from "react";
-import { Navigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import React, { useCallback } from "react";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 
 const Logout = () => {
-    
-    const userTokenRecoil = useRecoilValue(UserTokenAtom);
-    console.log(userTokenRecoil);
-    
+    const accessTokenAtom = useRecoilValue(AccessTokenAtom);
+    const setAccessTokenAtom = useSetRecoilState(AccessTokenAtom);
 
-    const onLogout = useCallback(() => {
-        logoutData();    
-    }, [])
-    
-    const logoutData = async () => {
-        const resData = await customAxios('get', '/api/v1/private/user/logout', {}, userTokenRecoil);
+    const onLogout = useCallback( async () => {
+
+        const resData = await customAxios('get', '/api/v1/private/user/logout', {}, accessTokenAtom);
         if ( resData?.data.code === "SUCCESS" ) {
             localStorage.removeItem('token')
-            return <Navigate to='/login' replace={true} />
+            setAccessTokenAtom('');
         }
-        
-    }
 
+    }, [])
+    
     return <button onClick={onLogout}>로그아웃</button>
 }
 
-export default Logout;
+export default React.memo(Logout);
