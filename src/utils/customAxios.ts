@@ -1,6 +1,7 @@
 import axios, { AxiosRequestConfig } from "axios"
 
-export const customAxios = async ( method: string, url: string, data: {}, accessToken: string | null ) => {
+export const customAxios = async ( method: string, url: string, data: {} | null, accessToken: string | null ) => {
+    // AT 값 여기서 불러와서 없으면 로그인으로
     const getAxiosConfig: AxiosRequestConfig = {
         method: method,
         url: url,
