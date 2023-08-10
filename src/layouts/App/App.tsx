@@ -4,7 +4,7 @@ import Workspace from "@layouts/workspace";
 import LoginPage from "@pages/LoginPage";
 import NotFound from "@pages/NotFound";
 import SignUpPage from "@pages/SignUpPage";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { GlobalStyle } from "./style";
 
 const App = () => {
@@ -14,7 +14,7 @@ const App = () => {
             <GlobalStyle />
             <Routes>
                 <Route element={<PublicLayout />}>
-                    <Route path="/" element={<LoginPage />} />
+                    <Route path="/" element={<Navigate to='/login' replace={true} />} />
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/signup" element={<SignUpPage />} />
                 </Route>
