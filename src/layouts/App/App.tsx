@@ -1,23 +1,27 @@
+import AuthLayout from "@layouts/AuthLayout";
+import PublicLayout from "@layouts/PublicLayout";
 import Workspace from "@layouts/workspace";
-import Login from "@pages/Login";
-import SignUp from "@pages/SignUp";
-import { Navigate, Route, Routes } from "react-router-dom";
+import LoginPage from "@pages/LoginPage";
+import NotFound from "@pages/NotFound";
+import SignUpPage from "@pages/SignUpPage";
+import { Route, Routes } from "react-router-dom";
 import { GlobalStyle } from "./style";
 
 const App = () => {
-    const isUserLoginToken = localStorage.getItem('token');
 
     return (
         <>
             <GlobalStyle />
             <Routes>
-                <Route path="/" element={
-                    isUserLoginToken ? <Navigate to="/workspace" replace={true}/> :
-                    <Navigate to="/login" replace={true}/>}>
+                <Route element={<PublicLayout />}>
+                    <Route path="/" element={<LoginPage />} />
+                    <Route path="/login" element={<LoginPage />} />
+                    <Route path="/signup" element={<SignUpPage />} />
                 </Route>
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<SignUp />} />
-                <Route path="/workspace/*" element={<Workspace />} />
+                <Route element={<AuthLayout />}>
+                    <Route path="/workspace/*" element={<Workspace />} />
+                </Route>
+                <Route path="*" element={<NotFound />} />
             </Routes>
         </>
     )
