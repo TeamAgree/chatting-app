@@ -1,25 +1,22 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import useInput from "@hooks/useInput";
 import { LoginProps } from "@typings/db";
 import { customAxios } from "@utils/customAxios";
-import { UserTokenAtom } from "@recoil/UserTokenAtom";
 import { LoginWrap, Form } from "./styles";
-import { getCookie } from "@utils/Cookie";
+import { AccessTokenAtom } from "@recoil/AccessTokenAtom";
 
 const LoginPage = () => {
-
-    const cookie = getCookie('chatting-app');
-    console.log(cookie);
-    
 
     const [id, onChnageId] = useInput('');
     const [password, onChangePassword] = useInput('');
     const [isError, setIsError] = useState(false);
     const [errorText, setErrorText] = useState('');
 
-    const onSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
+    const setAccessTokenAtom = useSetRecoilState(AccessTokenAtom);
+
+    const onSubmit = useCallback( async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         setIsError(false);
@@ -37,26 +34,21 @@ const LoginPage = () => {
         }
 
         const data: LoginProps = { id, pw: password };
-        const loginData = async () => {
-            try {
-                const resData = await customAxios('post', '/api/v1/public/user/login', data, null);
 
-                if (resData?.data.code === "SUCCESS") {
+        try {
+            const resData = await customAxios('post', '/api/v1/public/user/login', data, null);
 
-                    return <Navigate to="/workspace" replace={true} />
-                } else {
-                    throw resData;
+            if (resData?.data.code === "SUCCESS") {
+                setAccessTokenAtom(resData.data.result);
+            } else {
+                throw resData;
 
-                }
-            } catch (e) {
-                console.log(e);
-                setIsError(true);
-                setErrorText('비밀번호를 입력하세요.');
             }
-
+        } catch (e) {
+            console.log(e);
+            setIsError(true);
+            setErrorText('비밀번호를 입력하세요.');
         }
-
-        loginData();
 
     }, [id, password]);
 
@@ -64,12 +56,6 @@ const LoginPage = () => {
         setIsError(false);
         setErrorText('');
     }, [id, password])
-
-    // if (state) {
-    //     navigate(state);
-    // } else {
-    //     navigate("/workspace");
-    // }
 
     return (
         <LoginWrap>
