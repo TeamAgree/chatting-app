@@ -4,7 +4,7 @@ const localStorageEffect: <T>(key: string) => AtomEffect<T> =
     (key: string) => 
         ({ setSelf, onSet }) => {
 
-    const savedValaue = localStorage.getItem('chatting-app');
+    const savedValaue = localStorage.getItem(key);
     if (savedValaue != null) {
         setSelf(JSON.parse(savedValaue));
     }
@@ -20,7 +20,7 @@ export const AccessTokenAtom = atom<string>({
     key: "AccessTokenAtom",
     default: "",
     effects: [
-        localStorageEffect<string>('chatting-app')
+        localStorageEffect<string>('CAAT')
     ]
 });
 
