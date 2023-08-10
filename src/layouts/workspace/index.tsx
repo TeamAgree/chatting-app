@@ -1,24 +1,31 @@
 import Navigation from "@components/Navigation";
-import ChatList from "@pages/ChatList";
-import Chatting from "@pages/Chatting";
-import MemberList from "@pages/MemberList";
+import ChatList from "@pages/AuthPages/ChatList";
+import Chatting from "@pages/AuthPages/Chatting";
+import MemberList from "@pages/AuthPages/MemberList";
+import MyInfo from "@pages/AuthPages/MyInfo";
+import NotFound from "@pages/NotFound";
+import React from "react";
 import { Route, Routes } from "react-router-dom";
+import { HeaderWrap, MainWrap, WorkspaceWrap } from "./styles";
 
 const Workspace = () => {
 
     return (
-        <>
-            <Navigation />
-            <div>
-                <h2>워크스페이스 페이지!</h2>
-            </div>
-            <Routes>
-                <Route path="/Chatting" element={<Chatting />}></Route>
-                <Route path="/ChatList" element={<ChatList />}></Route>
-                <Route path="/MemberList" element={<MemberList />}></Route>
-            </Routes>
-        </>
+        <WorkspaceWrap>
+            <HeaderWrap>
+                <Navigation />
+            </HeaderWrap>
+            <MainWrap>
+                <Routes>
+                    <Route path="/chatting" element={<Chatting />}></Route>
+                    <Route path="/chatList" element={<ChatList />}></Route>
+                    <Route path="/memberList" element={<MemberList />}></Route>
+                    <Route path="/myinfo" element={<MyInfo />}></Route>
+                    <Route path="/*" element={<NotFound />}></Route>
+                </Routes>
+            </MainWrap>
+        </WorkspaceWrap>
     )
 }
 
-export default Workspace;
+export default React.memo(Workspace);
