@@ -12,9 +12,9 @@ const isDevelopment = process.env.NODE_ENV !== 'production';
 
 const config: Configuration = {
     name: 'Chatting-app',
-    mode: isDevelopment ? 'development' : 'production',
-    devtool: !isDevelopment ? 'hidden-source-map' : 'eval',
-    resolve: {
+    mode: isDevelopment ? 'development' : 'production',                 // 웹팩 시작 모드 설정
+    devtool: !isDevelopment ? 'hidden-source-map' : 'eval',             // 디버깅을 위한 설정 배포시 'eval'
+    resolve: {                                                          // 경로 및 확장자 설정
         extensions: ['.js', '.ts', '.jsx', '.tsx'],
         alias: {
             '@hooks': path.resolve(__dirname, 'src/hooks'),
@@ -26,10 +26,10 @@ const config: Configuration = {
             '@recoil': path.resolve(__dirname, 'src/recoil'),
         },
     },
-    entry: {
+    entry: {                                                            // 진입점 설정
         app: './client',
     },
-    module: {
+    module: {                                                           // 로더 설정
         rules: [
             {
                 test: /\.(js|jsx|ts|tsx)$/,
@@ -96,7 +96,7 @@ const config: Configuration = {
             'process.env': JSON.stringify(dotenv.config().parsed),
         })
     ],
-    output: {
+    output: {                                                                                           // 빌드 결과물 위치 지정
         path: path.join(__dirname, 'dist'),
         filename: '[name].js',
         publicPath: '/dist/',
