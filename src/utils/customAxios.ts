@@ -1,11 +1,11 @@
 import axios, { AxiosRequestConfig } from "axios"
 
-export const customAxios = async ( method: string, url: string, data: {}, token: string | null ) => {
+export const customAxios = async ( method: string, url: string, data: {}, accessToken: string | null ) => {
     const getAxiosConfig: AxiosRequestConfig = {
         method: method,
         url: url,
         headers: {
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${accessToken}`
         }
     };
     
