@@ -4,8 +4,6 @@ import { Configuration as WebpackDevServerConfiguration } from "webpack-dev-serv
 import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin";
 import dotenv from "dotenv";
 
-
-
 interface Configuration extends WebpackConfiguration {
     devServer?: WebpackDevServerConfiguration;
 }
@@ -120,14 +118,14 @@ const config: Configuration = {
     },
 };
 
-// if (isDevelopment && config.plugins) {
-//     config.plugins.push(new webpack.HotModuleReplacementPlugin());
-//     config.plugins.push(new ReactRefreshWebpackPlugin());
-//     config.plugins.push(new BundleAnalyzerPlugin({ analyzerMode: 'server', openAnalyzer: true }));
-// }
-// if (!isDevelopment && config.plugins) {
-//     config.plugins.push(new webpack.LoaderOptionsPlugin({ minimize: true }));
-//     config.plugins.push(new BundleAnalyzerPlugin({ analyzerMode: 'static' }));
-// }
+if (isDevelopment && config.plugins) {
+    config.plugins.push(new webpack.HotModuleReplacementPlugin());
+    // config.plugins.push(new ReactRefreshWebpackPlugin());
+    // config.plugins.push(new BundleAnalyzerPlugin({ analyzerMode: 'server', openAnalyzer: true }));
+}
+if (!isDevelopment && config.plugins) {
+    config.plugins.push(new webpack.LoaderOptionsPlugin({ minimize: true }));
+    // config.plugins.push(new BundleAnalyzerPlugin({ analyzerMode: 'static' }));
+}
 
 export default config;

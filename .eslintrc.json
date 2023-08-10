@@ -16,7 +16,15 @@
       "plugin:react/recommended", // 리액트에 필요한 규칙
       "plugin:react/jsx-runtime", // react를 import 하지 않아도 되도록 인식하는 규칙
       "plugin:react-hooks/recommended", // react-hooks에 관한 규칙
-      "prettier", // pre
+      "plugin:prettier/recommended", // react-hooks에 관한 규칙
     ],
-};
+    "rules": {
+      "prettier/prettier": [
+        "error",
+        {
+          "printWidth": 80
+        }
+      ]
+    }
+}
   
