@@ -2,14 +2,14 @@ import React, { useCallback, useEffect, useState } from "react";
 import useInput from "@hooks/useInput";
 import { Link, Navigate } from "react-router-dom";
 import { SignUpProps } from "@typings/db";
-import { SignUpWrap, Form } from "@pages/Login/styles";
+import { SignUpWrap, Form } from "@pages/LoginPage/styles";
 import { customAxios } from "@utils/customAxios";
 
-const SignUp = () => {
+const SignUpPage = () => {
     const getUserToken = localStorage.getItem('token');
 
     const [ id, onChnageId ] = useInput('');
-    const [ password, onChangePW ] = useInput('');
+    const [ password, onChangePassWord ] = useInput('');
     const [ name, onChangeName ] = useInput('');
     const [ birth, onChangeBirth ] = useInput('');
 
@@ -17,8 +17,7 @@ const SignUp = () => {
     const [ errorText, setErrorText ] = useState('');
     const [ isSuccess, setIsSuccess ] = useState(false);
     const [ successText, setSuccessText ] = useState('');
-    const [ successTimer, setSuccessTimer ] = useState(10);
-
+    const [ successTimer, setSuccessTimer ] = useState(3);
 
     const onSubmit = useCallback((e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -52,11 +51,6 @@ const SignUp = () => {
             if (resData?.data.code === "SUCCESS") {
                 setIsSuccess(true);
                 setSuccessText('초 후 로그인 페이지로 이동합니다.');
-                setInterval(() => {
-                    setSuccessTimer((prev) => prev - 1)
-                }, 1000);
-
-
             }
             
         }
@@ -65,27 +59,13 @@ const SignUp = () => {
         
     }, [id, password, name, birth]);
 
-    useEffect(() => {
-        (async () => {
-
-            if (successTimer === 0) {
-                return <Navigate to="/login" replace={true} />
-            }
-        })
-    }, [successTimer])
-
-    if(getUserToken) {
-        return (
-            <Navigate to="/workspace" replace={true} />
-        )
-    }
 
     return (
         <SignUpWrap>
             <div className="container">
                 <Form onSubmit={onSubmit}>
                     <input type="text" name="id" placeholder="ID" value={id} onChange={onChnageId} />
-                    <input type="password" name="password" placeholder="PASSWORD" value={password} onChange={onChangePW}/>
+                    <input type="password" name="password" placeholder="PASSWORD" value={password} onChange={onChangePassWord}/>
                     <input type="text" name="name" placeholder="NAME" value={name} onChange={onChangeName}/>
                     <input type="number" name="birth" placeholder="BIRTH" value={birth} onChange={onChangeBirth}/>
                     <button type="submit">회원가입</button>
@@ -98,4 +78,4 @@ const SignUp = () => {
     )
 }
 
-export default SignUp;
+export default SignUpPage;
