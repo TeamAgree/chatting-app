@@ -9,9 +9,8 @@ const Logout = () => {
 
     const onLogout = useCallback( async () => {
 
-        const resData = await customAxios('get', '/api/v1/private/user/logout', {}, accessTokenAtom);
+        const resData = await customAxios('get', '/api/v1/private/user/logout', null, accessTokenAtom);
         if ( resData?.data.code === "SUCCESS" ) {
-            localStorage.removeItem('token')
             setAccessTokenAtom('');
         }
 
