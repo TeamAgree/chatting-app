@@ -1,9 +1,9 @@
 import AuthLayout from "@layouts/AuthLayout";
 import PublicLayout from "@layouts/PublicLayout";
 import Workspace from "@layouts/workspace";
-import LoginPage from "@pages/LoginPage";
+import LoginPage from "@pages/PublicPages/LoginPage";
 import NotFound from "@pages/NotFound";
-import SignUpPage from "@pages/SignUpPage";
+import SignUpPage from "@pages/PublicPages/SignUpPage";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { GlobalStyle } from "./style";
 
