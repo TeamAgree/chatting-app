@@ -9,7 +9,8 @@ export const customAxios = async ( method: string, url: string, data: {}, access
         }
     };
     
-    const pushAxiosConfig: AxiosRequestConfig = {
+    const postAxiosConfig: AxiosRequestConfig = {
+        
         method: method,
         url: url,
         headers: {
@@ -19,7 +20,7 @@ export const customAxios = async ( method: string, url: string, data: {}, access
     };
 
     try {
-        const res = await axios.request(method === 'post' ? pushAxiosConfig : getAxiosConfig);        
+        const res = await axios.request(method === 'post' ? postAxiosConfig : getAxiosConfig);        
         return res;
     }
     catch(e) {
