@@ -1,13 +1,25 @@
-import { useEffect } from "react";
+import { UserSelector } from "@recoil/UserAtom";
+import React, { Suspense, useCallback, useEffect, useState } from "react";
+import { useRecoilValue } from "recoil";
+
+type UserType = {
+    id: number;
+    name: string;
+}
 
 const MyInfo = () => {
+    const getUser = useRecoilValue(UserSelector);
 
-    useEffect(() => {
-        // const getUser = 
-    }, [])
+    const onClickUserInfo = useCallback(async (e: React.MouseEvent<HTMLButtonElement>) => {
+        console.log('test', e, getUser);
+
+    }, [getUser])
 
     return (
-        <div>My info</div>
+        <div>
+            <h1>My Info</h1>
+            <button onClick={onClickUserInfo}>정보 가져오기</button>
+        </div>
     )
 }
 

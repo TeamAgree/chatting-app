@@ -1,14 +1,8 @@
-import { UserAtom } from "@recoil/UserAtom";
-import { useRecoilState } from "recoil";
-
 
 const Chatting = () => {
 
-    const [user, setUser] = useRecoilState(UserAtom);
-    console.log(user);
 
-
-    return <div>채팅 갯수: {user.length}</div>
+    return <div>채팅 갯수: {}</div>
 }
 
 export default Chatting;
