@@ -1,18 +1,13 @@
-import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { AccessTokenAtom } from "@recoil/AccessTokenAtom";
+import { Navigate, Outlet } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 
 const PublicLayout = () => {
-
-    const { pathname } = useLocation();
-
-    if (pathname === "/") {
-        return <Navigate to="/login" replace={true} />
-    }
-
-    return (
-        <div>
-            <Outlet />
-        </div>
-    )
+    const accessTokenAtom = useRecoilValue(AccessTokenAtom);
+    
+    if (accessTokenAtom) return <Navigate to='/workspace/chatList' replace={true} />
+    else return <div><Outlet /></div>
+    
 }
 
 export default PublicLayout;
