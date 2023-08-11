@@ -9,7 +9,7 @@ const Logout = () => {
 
     const onLogout = useCallback( async () => {
 
-        const resData = await customAxios('get', '/api/v1/private/user/logout', null, accessTokenAtom);
+        const resData = await customAxios('get', '/api/v1/private/user/logout', null);
         if ( resData?.data.code === "SUCCESS" ) {
             setAccessTokenAtom('');
         }

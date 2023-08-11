@@ -47,7 +47,7 @@ const SignUpPage = () => {
 
         const data: SignUpProps = { id, pw: password, name, birth };
         const signUpData = async () => {
-            const resData = await customAxios('post', '/api/v1/public/user/join', data, null);
+            const resData = await customAxios('post', '/api/v1/public/user/join', data);
             if (resData?.data.code === "SUCCESS") {
                 setIsSuccess(true);
                 setSuccessText('초 후 로그인 페이지로 이동합니다.');

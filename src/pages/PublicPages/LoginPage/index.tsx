@@ -16,7 +16,7 @@ const LoginPage = () => {
 
     const setAccessTokenAtom = useSetRecoilState(AccessTokenAtom);
 
-    const onSubmit = useCallback( async (e: React.FormEvent<HTMLFormElement>) => {
+    const onSubmit = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         setIsError(false);
@@ -36,7 +36,7 @@ const LoginPage = () => {
         const data: LoginProps = { id, pw: password };
 
         try {
-            const resData = await customAxios('post', '/api/v1/public/user/login', data, null);
+            const resData = await customAxios('post', '/api/v1/public/user/login', data);
 
             if (resData?.data.code === "SUCCESS") {
                 setAccessTokenAtom(resData.data.result);
