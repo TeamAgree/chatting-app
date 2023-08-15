@@ -27,6 +27,7 @@ export interface LoginProps {
 
 export type SignUpProps = {
     id: string;
+    nickName: string;
     pw: string;
     name: string;
     birth: string | number;
