@@ -1,5 +1,6 @@
 import { AccessTokenAtom } from "@recoil/AccessTokenAtom";
 import { customAxios } from "@utils/customAxios";
+import axios, {AxiosRequestConfig} from "axios";
 import React, { useCallback } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 
@@ -9,9 +10,24 @@ const Logout = () => {
 
     const onLogout = useCallback( async () => {
 
-        const resData = await customAxios('get', '/api/v1/private/user/logout', null);
-        if ( resData?.data.code === "SUCCESS" ) {
-            setAccessTokenAtom('');
+        if (confirm('로그아웃 하실?')) {
+            const getAxiosConfig: AxiosRequestConfig = {
+                method: "GET",
+                url: "/api/v1/private/user/logout",
+                headers: {
+                    'Authorization': `Bearer ${accessTokenAtom}`
+                }
+            };
+            
+            try {
+                const res = await axios.request(getAxiosConfig);
+                if(res.data.code === 100) setAccessTokenAtom('')
+                else throw res
+            }
+            catch (e) {
+                console.error(e);
+            }
+            
         }
 
     }, [])
