@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import useInput from "@hooks/useInput";
 import { LoginProps } from "@typings/db";
-import { customAxios } from "@utils/customAxios";
 import { LoginWrap, Form } from "./styles";
 import { AccessTokenAtom } from "@recoil/AccessTokenAtom";
+import axios, { AxiosRequestConfig } from "axios";
 
 const LoginPage = () => {
 
@@ -35,19 +35,34 @@ const LoginPage = () => {
 
         const data: LoginProps = { id, pw: password };
 
-        try {
-            const resData = await customAxios('post', '/api/v1/public/user/login', data);
+        const postAxiosConfig: AxiosRequestConfig = {
 
-            if (resData?.data.code === "SUCCESS") {
-                setAccessTokenAtom(resData.data.result);
+            method: "POST",
+            url: "/api/v1/public/user/login",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: JSON.stringify(data)
+        };
+
+        try {
+            const res = await axios.request(postAxiosConfig);
+
+            if (res?.data.code === 100) {
+                setAccessTokenAtom(res.data.result);
             } else {
-                throw resData;
+                if (res.data.code === 101) {
+                    setIsError(true)
+                    setErrorText('아이디 또는 비밀번호를 확인해 주세요.');
+                }
+                
+                throw res;
 
             }
-        } catch (e) {
-            console.log(e);
-            setIsError(true);
-            setErrorText('비밀번호를 입력하세요.');
+        }
+        catch (e) {
+            console.error(e);
+
         }
 
     }, [id, password]);
