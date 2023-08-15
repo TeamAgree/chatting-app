@@ -1,18 +1,34 @@
-import { customAxios } from "@utils/customAxios";
 import { atom, selector } from "recoil";
+
+type UserInfo = {
+    id: string;
+    name: string;
+    pw: number;
+    birth: number;
+    roles: string;
+    chatrooms: [];
+    friends: [];
+    pushKey: string;
+    status: boolean;
+}
 
 export const _userInfoTrigger = atom<number>({
     key: "_userInfoTrigger",
     default: 0
 });
 
+export const UserInfoAtom = atom<UserInfo[]>({
+    key: "UserInfoAtom",
+    default: []
+})
+
 export const UserSelector = selector({
     key: "UserSelector",
     get: async ({ get }) => {
         get(_userInfoTrigger)
-        const user = await customAxios('get', '/api/v1/private/user', null);
+        // const user = await customAxios('get', '/api/v1/private/user', null);
 
-        return user;
+        // return user;
     },
     set: ({ set }) => {
         set(_userInfoTrigger, v => v + 1);
