@@ -38,7 +38,7 @@ const LoginPage = () => {
         const postAxiosConfig: AxiosRequestConfig = {
 
             method: "POST",
-            url: "/api/v1/public/user/login",
+            url: `${process.env.PUBLIC_BASE_URL}/user/login`,
             headers: {
                 'Content-Type': 'application/json'
             },

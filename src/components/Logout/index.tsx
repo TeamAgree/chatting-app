@@ -13,7 +13,7 @@ const Logout = () => {
         if (confirm('로그아웃 하실?')) {
             const getAxiosConfig: AxiosRequestConfig = {
                 method: "GET",
-                url: "/api/v1/private/user/logout",
+                url: `${process.env.PRIVATE_BASE_URL}/user/logout`,
                 headers: {
                     'Authorization': `Bearer ${accessTokenAtom}`
                 }
