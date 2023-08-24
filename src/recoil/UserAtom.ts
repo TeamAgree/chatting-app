@@ -1,4 +1,6 @@
-import { atom, selector } from "recoil";
+import axios from "axios";
+import { atom, selector, useRecoilValue, useSetRecoilState } from "recoil";
+import { AccessTokenAtom } from "./AccessTokenAtom";
 
 type UserInfo = {
     id: string;
@@ -17,18 +19,27 @@ export const _userInfoTrigger = atom<number>({
     default: 0
 });
 
-export const UserInfoAtom = atom<UserInfo[]>({
-    key: "UserInfoAtom",
-    default: []
-})
+// export const UserInfoAtom = atom<UserInfo[]>({
+//     key: "UserInfoAtom",
+//     default: []
+// })
 
 export const UserSelector = selector({
     key: "UserSelector",
     get: async ({ get }) => {
-        get(_userInfoTrigger)
-        // const user = await customAxios('get', '/api/v1/private/user', null);
+        get(_userInfoTrigger);
 
-        // return user;
+        const AccessToken = useRecoilValue(AccessTokenAtom);
+        
+        const res = await axios.get('/api/v1/private/user', {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${AccessToken}`
+            }
+        });
+
+        return res.data;
+        
     },
     set: ({ set }) => {
         set(_userInfoTrigger, v => v + 1);
