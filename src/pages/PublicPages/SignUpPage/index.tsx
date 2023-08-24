@@ -12,6 +12,8 @@ const SignUpPage = () => {
     // const [id, onChangeId] = useInput('');
     const [email, setEmail] = useState('');
     const [password, onChangePassWord] = useInput('');
+    // const [passwordCheck, onChangePassWordCheck] = useInput('');
+    const [passwordCheck, setPasswordCheck] = useState('');
     const [name, onChangeName] = useInput('');
     const [nickName, onChangeNickname] = useInput('');
     const [birth, onChangeBirth] = useInput('');
@@ -31,13 +33,12 @@ const SignUpPage = () => {
 
         setEmail(e.target.value);
         const isEmailCheck = EmailValidation(e.target.value);
-        
-        
+
         if (e.target.value === '') {
             setIsEmailForm(true);
             return;
         };
-        
+
         if (!isEmailCheck) {
             setIsEmailForm(isEmailCheck);
             setIsEmailFormText('이메일 형식으로 작성해 주세요.');
@@ -52,7 +53,7 @@ const SignUpPage = () => {
         timeout = setTimeout(async () => {
             const getAxiosConfig: AxiosRequestConfig = {
                 method: "GET",
-                url: `/api/v1/public/user/double-check/${e.target.value}`,
+                url: `${process.env.PUBLIC_BASE_URL}/user/double-check/${e.target.value}`,
             };
 
             try {
@@ -69,8 +70,21 @@ const SignUpPage = () => {
             catch (e) {
                 console.error(e);
             }
-        }, 500)
+        }, 300)
 
+    }, []);
+
+    const onChangePassWordCheck = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
+
+        setPasswordCheck(e.target.value);
+        console.log('1', password);
+        console.log('w', e.target.value);
+
+        if (password !== e.target.value) {
+            console.log('다름');
+
+            return;
+        }
     }, [])
 
     const onSubmit = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
@@ -79,7 +93,7 @@ const SignUpPage = () => {
         setErrorText('');
 
         console.log(isDoubleCheckId);
-        
+
         // if(!isDoubleCheckId) {
         //     setIsError(true);
         //     setErrorText('이메일 중복확인이 필요합니다.');
@@ -98,6 +112,11 @@ const SignUpPage = () => {
         if (!password) {
             setIsError(true);
             setErrorText('비밀번호를 입력하세요.');
+            return;
+        }
+        if (!passwordCheck || (password !== passwordCheck)) {
+            setIsError(true);
+            setErrorText('비밀번호 확인을 입력하세요.');
             return;
         }
         if (!name) {
@@ -121,7 +140,7 @@ const SignUpPage = () => {
         const postAxiosConfig: AxiosRequestConfig = {
 
             method: "POST",
-            url: "/api/v1/public/user/join",
+            url: `${process.env.PUBLIC_BASE_URL}/user/join`,
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -144,7 +163,7 @@ const SignUpPage = () => {
 
         }
 
-    }, [email, nickName, password, name, birth]);
+    }, [email, nickName, password, passwordCheck, name, birth]);
 
     useEffect(() => {
         setIsError(false);
@@ -152,20 +171,33 @@ const SignUpPage = () => {
         setIsDoubleCheckId(false);
         setIsDoubleCheckText('');
 
-    }, [email, password, name, nickName, birth]);
+    }, [email, password, passwordCheck, name, nickName, birth]);
 
 
     return (
         <SignUpWrap>
             <div className="container">
                 <Form onSubmit={onSubmit}>
-                    <input type="text" name="email" placeholder="EMAIL" maxLength={30} value={email} onChange={onChangeId} />
+                    <input type="text" name="email" maxLength={30} placeholder="EMAIL" value={email} onChange={onChangeId}
+                        onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                            if (e.target.value.length > e.target.maxLength) {
+                                e.target.value = e.target.value.slice(0, e.target.maxLength);
+                            }
+                        }} 
+                    />
                     {isDoubleCheckId && <p>{isDoubledCheckText}</p>}
                     {!isEmailForm && <p>{isEmailFormText}</p>}
                     <input type="password" name="password" placeholder="PASSWORD" value={password} onChange={onChangePassWord} />
+                    <input type="password" name="passwordCheck" placeholder="PASSWORD CHECK" value={passwordCheck} onChange={onChangePassWordCheck} />
                     <input type="text" name="name" placeholder="NAME" value={name} onChange={onChangeName} />
                     <input type="text" name="nickName" placeholder="NICKNAME" value={nickName} onChange={onChangeNickname} />
-                    <input type="number" name="birth" placeholder="BIRTH" value={birth} onChange={onChangeBirth} />
+                    <input type="number" name="birth" maxLength={6} placeholder="BIRTH" value={birth} onChange={onChangeBirth}
+                        onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                            if(e.target.value.length > e.target.maxLength) {
+                                e.target.value = e.target.value.slice(0, e.target.maxLength);
+                            }
+                        }} 
+                    />
                     <button type="submit">회원가입</button>
                     {isError && <p>{errorText}</p>}
                     {isSuccess && <p>{successText}</p>}
