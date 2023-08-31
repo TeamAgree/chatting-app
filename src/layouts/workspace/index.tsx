@@ -1,8 +1,9 @@
 import Navigation from "@components/Navigation";
-import ChatList from "@pages/AuthPages/ChatList";
-import Chatting from "@pages/AuthPages/Chatting";
-import MemberList from "@pages/AuthPages/MemberList";
-import MyInfo from "@pages/AuthPages/MyInfo";
+import ChattingListPage from "@pages/AuthPages/ChattingListPage";
+import FriendListPage from "@pages/AuthPages/FriendListPage";
+import MyProfilePage from "@pages/AuthPages/MyProfilePage";
+import ResetPasswordPage from "@pages/AuthPages/ResetPasswordPage";
+import SettingPage from "@pages/AuthPages/SettingPage";
 import NotFound from "@pages/NotFound";
 import React, { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
@@ -18,10 +19,14 @@ const Workspace = () => {
                 </HeaderWrap>
                 <MainWrap>
                     <Routes>
-                        <Route path="/chatting" element={<Chatting />}></Route>
-                        <Route path="/chatList" element={<ChatList />}></Route>
-                        <Route path="/memberList" element={<MemberList />}></Route>
-                        <Route path="/myinfo" element={<MyInfo />}></Route>
+                        <Route path="/chat" element={<ChattingListPage />}></Route>
+
+                        <Route path="/friend" element={<FriendListPage />}></Route>
+
+                        <Route path="/setting" element={<SettingPage />}></Route>
+                        <Route path="/setting/myProfile" element={<MyProfilePage />} />
+                        <Route path="/setting/resetPassword" element={<ResetPasswordPage />} />
+
                         <Route path="/*" element={<NotFound />}></Route>
                     </Routes>
                 </MainWrap>

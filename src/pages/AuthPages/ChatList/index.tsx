@@ -31,14 +31,14 @@ const ChatList = () => {
     
     return (
         <ChatListWrap>
-            {
+            {/* {
                 chat.length > 0 ?
                 (
                     chat.map((item: ChatList, i: number) => <div key={i}>{item?.chatroom}</div>)
                 ) : (
                     <h4>채팅을 만들어보시던가</h4>
                 )
-            }
+            } */}
             채팅리스트 페이지
         </ChatListWrap>
     )

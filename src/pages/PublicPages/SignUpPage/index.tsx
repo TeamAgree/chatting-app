@@ -17,6 +17,7 @@ const SignUpPage = () => {
     const [name, onChangeName] = useInput('');
     const [nickName, onChangeNickname] = useInput('');
     const [birth, onChangeBirth] = useInput('');
+    const [phoneNumber, onPhoneNumber] = useInput('');
 
     const [isError, setIsError] = useState(false);
     const [errorText, setErrorText] = useState('');
@@ -129,13 +130,18 @@ const SignUpPage = () => {
             setErrorText('닉네임을 입력하세요.');
             return;
         }
+        if (!phoneNumber) {
+            setIsError(true);
+            setErrorText('닉네임을 입력하세요.');
+            return;
+        }
         if (!birth) {
             setIsError(true);
             setErrorText('생일을 입력하세요.');
             return;
         }
 
-        const data: SignUpProps = { id: email, nickName, pw: password, name, birth };
+        const data: SignUpProps = { id: email, nickName, pw: encodeURI(password), name, birth };
 
         const postAxiosConfig: AxiosRequestConfig = {
 
@@ -191,6 +197,13 @@ const SignUpPage = () => {
                     <input type="password" name="passwordCheck" placeholder="PASSWORD CHECK" value={passwordCheck} onChange={onChangePassWordCheck} />
                     <input type="text" name="name" placeholder="NAME" value={name} onChange={onChangeName} />
                     <input type="text" name="nickName" placeholder="NICKNAME" value={nickName} onChange={onChangeNickname} />
+                    <input type="number" name="phoneNumber" maxLength={11} placeholder="PHONE NUMBER" value={phoneNumber} onChange={onPhoneNumber}
+                        onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
+                            if(e.target.value.length > e.target.maxLength) {
+                                e.target.value = e.target.value.slice(0, e.target.maxLength);
+                            }
+                        }} 
+                    />
                     <input type="number" name="birth" maxLength={6} placeholder="BIRTH" value={birth} onChange={onChangeBirth}
                         onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
                             if(e.target.value.length > e.target.maxLength) {

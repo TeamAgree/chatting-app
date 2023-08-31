@@ -38,6 +38,12 @@ export const UserSelector = selector({
             }
         });
 
+        console.log(res);
+        if (res.data.code == 101) {
+            
+        }
+        
+
         return res.data;
         
     },

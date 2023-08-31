@@ -5,7 +5,7 @@ import { useRecoilValue } from "recoil";
 const PublicLayout = () => {
     const accessTokenAtom = useRecoilValue(AccessTokenAtom);
     
-    if (accessTokenAtom) return <Navigate to='/workspace/chatList' replace={true} />
+    if (accessTokenAtom) return <Navigate to='/workspace/chat' replace={true} />
     else return <div><Outlet /></div>
     
 }

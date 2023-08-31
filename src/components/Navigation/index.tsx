@@ -1,4 +1,4 @@
-import Logout from "@components/Logout";
+import React from "react";
 import { Link } from "react-router-dom";
 
 const Navigation = () => {
@@ -6,22 +6,22 @@ const Navigation = () => {
     return (
         <ul>
             <li>
-                <Link to="/workspace/memberList">멤버 리스트</Link>
+                <Link to="/workspace/chat">채팅 리스트</Link>
             </li>
             <li>
-                <Link to="/workspace/chatList">채팅 리스트</Link>
+                <Link to="/workspace/friend">친구 리스트</Link>
             </li>
             <li>
-                <Link to="/workspace/chatting">채팅 페이지</Link>
+                <Link to="/workspace/setting">설정</Link>
             </li>
-            <li>
+            {/* <li>
                 <Link to="/workspace/myinfo">내 정보</Link>
-            </li>
-            <li>
+            </li> */}
+            {/* <li>
                 <Logout />
-            </li>
+            </li> */}
         </ul>
     )
 }
 
-export default Navigation;
+export default React.memo(Navigation);
