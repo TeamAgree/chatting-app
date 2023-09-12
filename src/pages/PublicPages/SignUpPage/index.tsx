@@ -17,7 +17,8 @@ const SignUpPage = () => {
     const [name, onChangeName] = useInput('');
     const [nickName, onChangeNickname] = useInput('');
     const [birth, onChangeBirth] = useInput('');
-    const [phoneNumber, onPhoneNumber] = useInput('');
+    // const [phoneNumber, onPhoneNumber] = useInput('');
+    const [phoneNumber, setPhoneNumber] = useState('');
 
     const [isError, setIsError] = useState(false);
     const [errorText, setErrorText] = useState('');
@@ -82,10 +83,21 @@ const SignUpPage = () => {
         console.log('w', e.target.value);
 
         if (password !== e.target.value) {
-            console.log('다름');
-
+            setIsError(true);
+            setErrorText('비밀번호가 일치하지 않습니다.');
             return;
+        } else {
+            setIsError(false);
         }
+    }, [password])
+
+    const onPhoneNumber = useCallback(async (e: React.ChangeEvent<HTMLInputElement>) => {
+
+        let tmp = e.target.value.replace(/-/g, '');
+        console.log(tmp);
+        // e.target.value && e.target.value.replace(/-/g, '');
+        setPhoneNumber(tmp);
+        
     }, [])
 
     const onSubmit = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
@@ -117,7 +129,7 @@ const SignUpPage = () => {
         }
         if (!passwordCheck || (password !== passwordCheck)) {
             setIsError(true);
-            setErrorText('비밀번호 확인을 입력하세요.');
+            setErrorText('비밀번호가 일치하지 않습니다.');
             return;
         }
         if (!name) {
@@ -197,13 +209,7 @@ const SignUpPage = () => {
                     <input type="password" name="passwordCheck" placeholder="PASSWORD CHECK" value={passwordCheck} onChange={onChangePassWordCheck} />
                     <input type="text" name="name" placeholder="NAME" value={name} onChange={onChangeName} />
                     <input type="text" name="nickName" placeholder="NICKNAME" value={nickName} onChange={onChangeNickname} />
-                    <input type="number" name="phoneNumber" maxLength={11} placeholder="PHONE NUMBER" value={phoneNumber} onChange={onPhoneNumber}
-                        onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
-                            if(e.target.value.length > e.target.maxLength) {
-                                e.target.value = e.target.value.slice(0, e.target.maxLength);
-                            }
-                        }} 
-                    />
+                    <input type="number" name="phoneNumber" maxLength={11} placeholder="PHONE NUMBER" value={phoneNumber} onChange={onPhoneNumber} />
                     <input type="number" name="birth" maxLength={6} placeholder="BIRTH" value={birth} onChange={onChangeBirth}
                         onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
                             if(e.target.value.length > e.target.maxLength) {

@@ -6,6 +6,7 @@ import NotFound from "@pages/NotFound";
 import SignUpPage from "@pages/PublicPages/SignUpPage";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { GlobalStyle } from "./style";
+import Test from "@pages/PublicPages/test";
 
 const App = () => {
 
@@ -17,6 +18,7 @@ const App = () => {
                     <Route path="/" element={<Navigate to='/login' replace={true} />} />
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/signup" element={<SignUpPage />} />
+                    <Route path="/test" element={<Test />} />
                 </Route>
                 <Route element={<AuthLayout />}>
                     <Route path="/workspace/*" element={<Workspace />} />
